@@ -46,3 +46,33 @@ func (c *Category) FindAll() ([]Category, error) {
 
 	return categories, nil
 }
+
+func (c *Course) FindByCategoryId(categoryId string) ([]Course, error) {
+	rows, err := c.db.Query("SELECT id, name, description FROM courses WHERE category_id = $1", categoryId)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	courses := []Course{}
+	for rows.Next() {
+		var id, name, description string
+		err := rows.Scan(&id, &name, &description)
+		if err != nil {
+			return nil, err
+		}
+		courses = append(courses, Course{ID: id, Name: name, Description: description})
+	}
+
+	return courses, nil
+}
+
+func (c *Category) FindByCourseId(courseID string) (Category, error) {
+	var id, name, description string
+	err := c.db.QueryRow("SELECT c.id, c.name, c.description FROM categories c INNER JOIN courses co ON c.id = co.category_id WHERE co.id = $1", courseID).Scan(&id, &name, &description)
+	if err != nil {
+		return Category{}, err
+	}
+
+	return Category{ID: id, Name: name, Description: description}, nil
+}
