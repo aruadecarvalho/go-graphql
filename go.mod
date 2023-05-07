@@ -1,4 +1,4 @@
-module github.com/aruadecarvalho/go-graphql-demo.git
+module github.com/aruadecarvalho/go-graphql.git
 
 go 1.18
 

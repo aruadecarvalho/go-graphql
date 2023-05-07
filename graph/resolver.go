@@ -1,6 +1,6 @@
 package graph
 
-import "github.com/aruadecarvalho/go-graphql-demo.git/internal/database"
+import "github.com/aruadecarvalho/go-graphql.git/internal/database"
 
 // This file will not be regenerated automatically.
 //
